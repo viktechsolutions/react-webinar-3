@@ -5,7 +5,8 @@ class Store {
     constructor(initState = {}) {
         this.state = initState;
         this.listeners = []; // Слушатели изменений состояния
-        this.usedCodes = new Set(initState.list.map(item => item.code)); // Использованные коды
+        this.uniqueCode = {};
+        this.maxCode = 0;
     }
 
     /**
@@ -16,6 +17,17 @@ class Store {
     subscribe(listener) {
         this.listeners.push(listener);
 
+        this.state.list.forEach(item => {
+            const code = item.code;
+
+            if (!this.uniqueCode[code]) {
+                this.uniqueCode[code] = item;
+            }
+
+            if (code > this.maxCode) {
+                this.maxCode = code;
+            }
+        })
         // Возвращается функция для удаления добавленного слушателя
         return () => {
             this.listeners = this.listeners.filter(item => item !== listener);
@@ -78,7 +90,9 @@ class Store {
             list: this.state.list.map(item => {
                 if (item.code === code) {
                     item.selected = !item.selected;
-                    item.click++
+                    if (item.selected === true) {
+                        item.clicked++
+                    }
                 } else {
                     item.selected = false;
                 }
@@ -89,14 +103,7 @@ class Store {
     }
 
     generateUniqueCode() {
-        let code = Math.floor(Math.random() * 10000);
-
-        while (this.usedCodes.has(code)) {
-            code = Math.floor(Math.random() * 10000);
-        }
-        this.usedCodes.add(code);
-
-        return code;
+        return ++this.maxCode;
     }
 
 }
