@@ -1,3 +1,4 @@
+
 .Head {
   height: 80px;
   background: #f5f5f5;
@@ -8,3 +9,14 @@
   margin: 0;
   padding: 20px 20px 10px;
 }
+=======
+.Head {
+  height: 80px;
+  background: #f5f5f5;
+}
+
+.Head h1 {
+  margin: 0;
+  padding: 20px 20px 10px;
+}
+

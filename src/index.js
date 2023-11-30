@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {generateCode} from './utils.js';
@@ -25,3 +26,4 @@ store.subscribe(() => {
 
 // Первый рендер приложения
 root.render(<App store={store}/>);
+
