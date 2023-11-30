@@ -1,6 +1,7 @@
 .Head {
   height: 80px;
   background: #f5f5f5;
+  border-radius: 10px;
 }
 
 .Head h1 {

@@ -18,6 +18,11 @@
   padding: 20px 10px;
 }
 
+.Item-price {
+  white-space: nowrap;
+  padding: 20px 10px;
+}
+
 .Item-actions {
   display: flex;
   justify-content: flex-end;

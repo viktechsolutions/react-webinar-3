@@ -50,6 +50,45 @@ class Store {
     })
   };
 
+  addToCart(code) {
+    const itemToAdd = this.state.list.find(item => item.code === code);
+
+    if (itemToAdd) {
+      const existingItemInCart = this.state.cart.find(item => item.code === code);
+
+      if (existingItemInCart) {
+        const updatedItem = {
+          ...existingItemInCart,
+          quantity: existingItemInCart.quantity + 1
+        };
+
+        const updatedCart = this.state.cart.map(item => item.code === code ? updatedItem : item);
+
+        this.setState({
+          ...this.state,
+          cart: updatedCart
+        });
+      } else {
+        const newItem = {
+          ...itemToAdd,
+          quantity: 1
+        };
+
+        this.setState({
+          ...this.state,
+          cart: [...this.state.cart, newItem]
+        });
+      }
+    }
+  }
+
+  deleteFromCart(code) {
+    this.setState({
+      ...this.state,
+      cart: this.state.cart.filter(item => item.code !== code)
+    })
+  }
+
   /**
    * Удаление записи по коду
    * @param code
