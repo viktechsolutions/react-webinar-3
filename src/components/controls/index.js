@@ -33,7 +33,7 @@ function Controls(props) {
           one: 'товар',
           few: 'товара',
           many: 'товаров'
-          })}` : ''}
+        })}` : ''}
           {  count ? ` / ${sumCart.toLocaleString()} ₽ ` : ''}
         </b>
       </div>)}
@@ -43,8 +43,8 @@ function Controls(props) {
         </b>
       </div>)}
       {props.context === 'list' && (
-          <button  onClick={openModal}>Перейти
-          </button>
+        <button  onClick={openModal}>Перейти
+        </button>
       )}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Head className="head" title="Корзина"/>

@@ -11,12 +11,12 @@ function Cart({cart,onDeleteFromCart}) {
       {
         cart.length ?
           cart.map(item =>
-          <div key={item.code} className='Cart-item'>
-            <Item item={item}
-                  onDeleteFromCart={onDeleteFromCart}
-                  context="cart"
-            />
-          </div>): 'Корзина пуста'
+            <div key={item.code} className='Cart-item'>
+              <Item item={item}
+                    onDeleteFromCart={onDeleteFromCart}
+                    context="cart"
+              />
+            </div>): 'Корзина пуста'
       }
     </div>
   )

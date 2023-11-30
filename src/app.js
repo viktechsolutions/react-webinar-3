@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
@@ -26,7 +26,10 @@ function App({store}) {
       <Head title='Приложение на чистом JS'/>
       <Controls cart={cart}  store={store}
                />
+      <Controls cart={cart}  store={store}
+               />
       <List list={list}
+            onAddToCart={callbacks.onAddToCart}/>
             onAddToCart={callbacks.onAddToCart}/>
     </PageLayout>
   );
