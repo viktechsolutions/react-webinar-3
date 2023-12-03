@@ -2,11 +2,48 @@
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+  animation-name: opacity;
+  animation-duration: 0.2s;
 }
 
 .Controls-count {
   padding:0 26px;
 }
+
 .head {
   border-radius: 10px;
+}
+
+.Controls-count-total {
+  display: grid;
+  grid-template-columns: 1fr 50fr 3fr auto 6fr auto;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+}
+
+.Controls-count-total div:first-child {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.Controls-count-total div:last-child {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.Controls-count b {
+  padding-left: 10px;
+}
+
+.Controls-button{
+  width: 80px;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

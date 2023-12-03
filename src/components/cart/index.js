@@ -1,13 +1,12 @@
 import React from "react";
+
 import PropTypes from 'prop-types';
 import './style.css';
 import Item from "../item";
 
 function Cart({cart,onDeleteFromCart}) {
   return (
-
     <div className='Cart'>
-      <div className='head'></div>
       {
         cart.length ?
           cart.map(item =>
@@ -16,7 +15,7 @@ function Cart({cart,onDeleteFromCart}) {
                     onDeleteFromCart={onDeleteFromCart}
                     context="cart"
               />
-            </div>): 'Корзина пуста'
+            </div>): <div className='Cart-empty'>Корзина пуста</div>
       }
     </div>
   )

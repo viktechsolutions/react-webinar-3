@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
@@ -14,22 +15,17 @@ function App({store}) {
   const list = store.getState().list;
   const cart = store.getState().cart;
 
-   const callbacks = {
+  const callbacks = {
     onAddToCart: useCallback((code) => {
         store.addToCart(code);
     }, [store]),
-
   }
 
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
-      <Controls cart={cart}  store={store}
-               />
-      <Controls cart={cart}  store={store}
-               />
+      <Controls cart={cart}  store={store}/>
       <List list={list}
-            onAddToCart={callbacks.onAddToCart}/>
             onAddToCart={callbacks.onAddToCart}/>
     </PageLayout>
   );

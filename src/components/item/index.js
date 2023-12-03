@@ -1,9 +1,9 @@
 import React from "react";
+
 import PropTypes from "prop-types";
 import './style.css';
 
 function Item(props) {
-
   const callbacks = {
     onAddToCart: (e) => {
       e.stopPropagation();
@@ -24,7 +24,11 @@ function Item(props) {
       <div className='Item-price'>
         {props.item.price.toLocaleString()} ₽
       </div>
-
+      {props.context === 'cart' && (
+        <div className='Item-quantity'>
+          {props.item.quantity} шт
+        </div>
+      )}
       <div className='Item-actions'>
         {props.context === 'list' && (
           <button onClick={callbacks.onAddToCart}>

@@ -8,15 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    animation-name: opacity;
+    animation-duration: 0.2s;
 }
 
 .Modal-content {
     width: 960px;
-    height: 407px;
     background: #fff;
     border-radius: 10px;
     position: relative;
+    padding-bottom: 60px;
 }
 
 .Modal-close {
@@ -24,4 +25,13 @@
     top: 32px;
     right: 32px;
     cursor: pointer;
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

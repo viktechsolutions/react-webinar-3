@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from "react";
+
 import PropTypes from 'prop-types';
 import './style.css';
 import {plural} from "../../utils";
@@ -11,6 +12,7 @@ function Controls(props) {
   const {cart,  store} = props
   const sumCart = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   const openModal = () => {
     setIsModalOpen(true);
   }
@@ -28,22 +30,27 @@ function Controls(props) {
   return (
     <div className='Controls'>
       {props.context === 'list' && ( <div className='Controls-count'>
-        {count ? `В корзине: `: ''}
+       В корзине:
         <b> {count ? ` ${count} ${plural(count, {
           one: 'товар',
           few: 'товара',
           many: 'товаров'
         })}` : ''}
-          {  count ? ` / ${sumCart.toLocaleString()} ₽ ` : ''}
+          {count ? ` / ${sumCart.toLocaleString()} ₽ ` : 'пусто'}
         </b>
       </div>)}
-      {props.context === 'cart' && ( <div className='Controls-count'>
-        <b>
-          {  count ? `Итого ${sumCart.toLocaleString()} ₽ ` : ''}
-        </b>
-      </div>)}
+      {props.context === 'cart' && (
+        <div className='Controls-count-total'>
+          <div>
+            <b>{count ? `Итого`: ''}&nbsp;</b>
+          </div>
+          <div>
+            <b>{count ? ` ${sumCart.toLocaleString()} ₽ ` : ''}</b>
+          </div>
+      </div>
+      )}
       {props.context === 'list' && (
-        <button  onClick={openModal}>Перейти
+        <button className='Controls-button' onClick={openModal}>Перейти
         </button>
       )}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
