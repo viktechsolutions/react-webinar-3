@@ -51,7 +51,7 @@ function App({store}) {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Head className="head" title="Корзина"/>
         <Cart cart={cart} onDeleteFromCart={callbacks.onDeleteFromCart}/>
-        <Controls cart={cart} context="cart"/>
+        <Controls cart={cart} context="cart" store={store}/>
       </Modal>
     </PageLayout>
   );

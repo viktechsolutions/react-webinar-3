@@ -5,9 +5,9 @@ import './style.css';
 import {plural} from "../../utils";
 
 function Controls(props) {
-  const {openModal, cart, uniqueItemsCount} = props
-  const sumCart = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const {openModal,  uniqueItemsCount , store} = props
+  const sumCart = store.sumCart();
+  const count = store.count();
   const uniqueItems = uniqueItemsCount;
 
   return (
@@ -53,8 +53,6 @@ Controls.propTypes = {
 };
 
 Controls.defaultProps = {
-  onDeleteFromCart: () => {
-  },
   context: 'list'
 }
 

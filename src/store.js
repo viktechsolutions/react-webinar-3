@@ -106,6 +106,14 @@ class Store {
     })
   };
 
+  sumCart() {
+    return this.state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  }
+
+  count() {
+    return this.state.cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
   /**
    * Выделение записи по коду
    * @param code
