@@ -9,9 +9,10 @@ import Cart from "../cart";
 
 function Controls(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {cart,  store} = props
+  const {cart, uniqueItemsCount, store} = props
   const sumCart = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const uniqueItems = uniqueItemsCount
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -31,12 +32,12 @@ function Controls(props) {
     <div className='Controls'>
       {props.context === 'list' && ( <div className='Controls-count'>
        В корзине:
-        <b> {count ? ` ${count} ${plural(count, {
+        <b> {uniqueItems ? ` ${uniqueItems} ${plural(uniqueItems, {
           one: 'товар',
           few: 'товара',
           many: 'товаров'
         })}` : ''}
-          {count ? ` / ${sumCart.toLocaleString()} ₽ ` : 'пусто'}
+          {uniqueItems ? ` / ${sumCart.toLocaleString()} ₽ ` : 'пусто'}
         </b>
       </div>)}
       {props.context === 'cart' && (
@@ -55,7 +56,7 @@ function Controls(props) {
       )}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Head className="head" title="Корзина"/>
-        <Cart cart={cart} onDeleteFromCart={callbacks.onDeleteFromCart}  />
+        <Cart cart={cart}  onDeleteFromCart={callbacks.onDeleteFromCart}  />
         <Controls cart={cart}  context="cart"/>
       </Modal>
     </div>

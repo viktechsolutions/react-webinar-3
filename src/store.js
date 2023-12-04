@@ -59,14 +59,15 @@ class Store {
       if (existingItemInCart) {
         const updatedItem = {
           ...existingItemInCart,
-          quantity: existingItemInCart.quantity + 1
+          quantity: existingItemInCart.quantity + 1,
         };
 
         const updatedCart = this.state.cart.map(item => item.code === code ? updatedItem : item);
 
         this.setState({
           ...this.state,
-          cart: updatedCart
+          cart: updatedCart,
+          uniqueItemsCount: updatedCart.length,
         });
       } else {
         const newItem = {
@@ -74,9 +75,12 @@ class Store {
           quantity: 1
         };
 
+        const updatedCart = [...this.state.cart, newItem];
+
         this.setState({
           ...this.state,
-          cart: [...this.state.cart, newItem]
+          cart: updatedCart,
+          uniqueItemsCount: this.state.cart.length + 1,
         });
       }
     }
@@ -85,7 +89,8 @@ class Store {
   deleteFromCart(code) {
     this.setState({
       ...this.state,
-      cart: this.state.cart.filter(item => item.code !== code)
+      cart: this.state.cart.filter(item => item.code !== code),
+      uniqueItemsCount: this.state.cart.length - 1,
     })
   }
 

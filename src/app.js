@@ -14,6 +14,7 @@ function App({store}) {
 
   const list = store.getState().list;
   const cart = store.getState().cart;
+  const uniqueItemsCount = store.getState().uniqueItemsCount;
 
   const callbacks = {
     onAddToCart: useCallback((code) => {
@@ -24,7 +25,9 @@ function App({store}) {
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
-      <Controls cart={cart}  store={store}/>
+      <Controls cart={cart}
+                store={store}
+                uniqueItemsCount={uniqueItemsCount}/>
       <List list={list}
             onAddToCart={callbacks.onAddToCart}/>
     </PageLayout>

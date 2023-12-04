@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './style.css';
 import Item from "../item";
 
-function Cart({cart,onDeleteFromCart}) {
+function Cart({cart, onDeleteFromCart}) {
   return (
     <div className='Cart'>
       {
