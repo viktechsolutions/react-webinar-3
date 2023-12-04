@@ -1,32 +1,14 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
 
 import PropTypes from 'prop-types';
 import './style.css';
 import {plural} from "../../utils";
-import Modal from "../modal";
-import Head from "../head";
-import Cart from "../cart";
 
 function Controls(props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const {cart, uniqueItemsCount, store} = props
+  const {openModal, cart, uniqueItemsCount} = props
   const sumCart = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const uniqueItems = uniqueItemsCount
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  }
-
-  const callbacks = {
-    onDeleteFromCart: useCallback((code) => {
-      store.deleteFromCart(code);
-    }, [store]),
-  }
+  const uniqueItems = uniqueItemsCount;
 
   return (
     <div className='Controls'>
@@ -54,17 +36,14 @@ function Controls(props) {
         <button className='Controls-button' onClick={openModal}>Перейти
         </button>
       )}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Head className="head" title="Корзина"/>
-        <Cart cart={cart}  onDeleteFromCart={callbacks.onDeleteFromCart}  />
-        <Controls cart={cart}  context="cart"/>
-      </Modal>
     </div>
   )
 }
 
 Controls.propTypes = {
   onDeleteFromCart: PropTypes.func,
+  openModal: PropTypes.func,
+  uniqueItemsCount: PropTypes.number,
   cart: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
@@ -74,8 +53,6 @@ Controls.propTypes = {
 };
 
 Controls.defaultProps = {
-  onAddToCart: () => {
-  },
   onDeleteFromCart: () => {
   },
   context: 'list'
