@@ -18,7 +18,6 @@ function App({store}) {
   const cart = store.getState().cart;
   const uniqueItemsCount = store.getState().uniqueItemsCount;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => {
     setIsModalOpen(true);
   }

@@ -54,44 +54,41 @@ class Store {
     const itemToAdd = this.state.list.find(item => item.code === code);
 
     if (itemToAdd) {
-      const existingItemInCart = this.state.cart.find(item => item.code === code);
+      const existingItemIndex = this.state.cart.findIndex(item => item.code === code);
+      let updatedCart = [...this.state.cart];
 
-      if (existingItemInCart) {
-        const updatedItem = {
-          ...existingItemInCart,
-          quantity: existingItemInCart.quantity + 1,
+      if (existingItemIndex !== -1) {
+        updatedCart[existingItemIndex] = {
+          ...updatedCart[existingItemIndex],
+          quantity: updatedCart[existingItemIndex].quantity + 1,
         };
-
-        const updatedCart = this.state.cart.map(item => item.code === code ? updatedItem : item);
-
-        this.setState({
-          ...this.state,
-          cart: updatedCart,
-          uniqueItemsCount: updatedCart.length,
-        });
       } else {
-        const newItem = {
-          ...itemToAdd,
-          quantity: 1
-        };
-
-        const updatedCart = [...this.state.cart, newItem];
-
-        this.setState({
-          ...this.state,
-          cart: updatedCart,
-          uniqueItemsCount: this.state.cart.length + 1,
-        });
+        updatedCart = updatedCart.concat({ ...itemToAdd, quantity: 1 });
       }
+
+      this.setState({
+        ...this.state,
+        cart: updatedCart,
+        uniqueItemsCount: new Set(updatedCart.map(item => item.code)).size,
+      });
     }
   }
 
+  sumCart() {
+    return this.state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  }
+
+  count() {
+    return this.state.cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
   deleteFromCart(code) {
+    const updatedCart = this.state.cart.filter(item => item.code !== code);
     this.setState({
       ...this.state,
-      cart: this.state.cart.filter(item => item.code !== code),
-      uniqueItemsCount: this.state.cart.length - 1,
-    })
+      cart: updatedCart,
+      uniqueItemsCount: new Set(updatedCart.map(item => item.code)).size,
+    });
   }
 
   /**
@@ -105,14 +102,6 @@ class Store {
       list: this.state.list.filter(item => item.code !== code)
     })
   };
-
-  sumCart() {
-    return this.state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  }
-
-  count() {
-    return this.state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  }
 
   /**
    * Выделение записи по коду
