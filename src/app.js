@@ -37,7 +37,6 @@ function App({store}) {
     }, [store]),
   }
 
-
   return (
     <PageLayout>
       <Head title='Приложение на чистом JS'/>
@@ -48,7 +47,7 @@ function App({store}) {
       <List list={list}
             onAddToCart={callbacks.onAddToCart}/>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Head className="head" title="Корзина"/>
+        <Head className="modal-head" title="Корзина"/>
         <Cart cart={cart} onDeleteFromCart={callbacks.onDeleteFromCart}/>
         <Controls cart={cart} context="cart" store={store}/>
       </Modal>
