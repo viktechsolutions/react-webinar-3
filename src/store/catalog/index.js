@@ -11,7 +11,8 @@ class Catalog extends StoreModule {
   initState() {
     return {
       list: [],
-      totalCount: 0
+      totalCount: 0,
+      item: null
     }
   }
 
@@ -24,6 +25,15 @@ class Catalog extends StoreModule {
       list: json.result.items,
       totalCount: json.result.count
     }, 'Загружены товары из АПИ');
+  }
+
+  async loadOne(_id) {
+    const response = await fetch(`api/v1/articles/${_id}?fields=*,madeIn(title,code),category(title)`);
+    const json = await response.json();
+    this.setState({
+      ...this.getState(),
+      item: json.result
+    }, 'Загружен один товар из АПИ');
   }
 }
 

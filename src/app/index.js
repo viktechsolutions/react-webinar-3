@@ -5,6 +5,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Product from "../components/product";
+import Error from "../components/error";
 
 /**
  * Приложение
@@ -18,8 +20,14 @@ function App() {
     {
       path: "/",
       element: <Main/>,
+      errorElement: <Error/>
+    },
+    {
+      path: "/product/:id",
+      element:<Product/>
     },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />
