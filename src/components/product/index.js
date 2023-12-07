@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from "react";
-import {useParams} from "react-router";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import PageLayout from "../page-layout";
@@ -8,6 +7,7 @@ import BasketTool from "../basket-tool";
 import './style.css';
 import {numberFormat} from "../../utils";
 import Basket from "../../app/basket";
+import {useParams} from "react-router";
 
 function Product() {
   const activeModal = useSelector(state => state.modals.name);
