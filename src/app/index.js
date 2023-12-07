@@ -1,6 +1,10 @@
 import Main from "./main";
 import Basket from "./basket";
 import useSelector from "../store/use-selector";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 /**
  * Приложение
@@ -10,9 +14,15 @@ function App() {
 
   const activeModal = useSelector(state => state.modals.name);
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main/>,
+    },
+  ]);
   return (
     <>
-      <Main/>
+      <RouterProvider router={router} />
       {activeModal === 'basket' && <Basket/>}
     </>
   );

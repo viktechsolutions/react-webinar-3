@@ -11,22 +11,17 @@ import Pagination from "../../components/pagination";
 function Main() {
 
   const store = useStore();
-  const [currentPage, setCurrentPage] = useState(1); // Добавлено состояние для текущей страницы
-  // const [totalItems, setTotalItems] = useState(0); // Добавлено состояние для общего количества товаров
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Функция для загрузки данных с учетом текущей страницы
   const loadItems = useCallback((page) => {
-    store.actions.catalog.load(page); // Здесь нужно убедиться, что метод load может принимать страницу как параметр
-    // Вам также может потребоваться обновить состояние totalItems, если ваш API предоставляет эту информацию
+    store.actions.catalog.load(page);
   }, [store]);
 
   useEffect(() => {
     loadItems(currentPage);
   }, [currentPage, loadItems]);
 
-  // useEffect(() => {
-  //   store.actions.catalog.load();
-  // }, []);
 
   const select = useSelector(state => ({
     list: state.catalog.list,
