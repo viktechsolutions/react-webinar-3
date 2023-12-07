@@ -9,8 +9,10 @@ import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 import Product from "../../components/product";
 import {Route, Routes, useLocation, useParams} from "react-router";
+import Basket from "../basket";
 
 function Main() {
+  const activeModal = useSelector(state => state.modals.name);
   const { id } = useParams();
   const location = useLocation();
   const store = useStore();
@@ -71,6 +73,7 @@ function Main() {
               currentPage={currentPage}
               onChangePage={setCurrentPage}
             />
+            {activeModal === 'basket' && <Basket/>}
           </>
         } />
         <Route path="/product/:id" element={<Product />} />

@@ -10,6 +10,6 @@ const root = createRoot(document.getElementById('root'));
 // Первый рендер приложения
 root.render(
   <StoreContext.Provider value={store}>
-    <App/>
+      <App/>
   </StoreContext.Provider>
 );
