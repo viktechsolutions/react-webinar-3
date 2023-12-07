@@ -6,7 +6,7 @@ GET http://example.front.ylab.io/api/v1/articles
 ###
 # Список с пагинацией
 
-GET http://example.front.ylab.io/api/v1/articles?limit=10&skip=20
+GET http://example.front.ylab.io/api/v1/articles?limit=10&skip=30
 
 ###
 # Список с пагинацией и возвратом общего количества (и только нужных свойств через fields)
@@ -24,3 +24,4 @@ GET http://example.front.ylab.io/api/v1/articles/64845d46f4686f573a2287e3
 # Про формат fields смотри http://query.rest
 
 GET http://example.front.ylab.io/api/v1/articles/64845d46f4686f573a2287e3?fields=*,madeIn(title,code),category(title)
+
