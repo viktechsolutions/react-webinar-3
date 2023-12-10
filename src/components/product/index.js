@@ -5,9 +5,9 @@ import PageLayout from "../page-layout";
 import Head from "../head";
 import BasketTool from "../basket-tool";
 import './style.css';
-import {numberFormat} from "../../utils";
 import Basket from "../../app/basket";
 import {useParams} from "react-router";
+import ProductItem from "../product-item";
 
 function Product() {
   const activeModal = useSelector(state => state.modals.name);
@@ -37,17 +37,10 @@ function Product() {
         {store.state.catalog.item ? (
           <>
             <div>
-              <Head title={store.state.catalog.item.title}></Head>
+              <Head title={store.state.catalog.item.title}/>
               <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                          sum={select.sum}  />
-              <div className="Product-boxInfo">
-                <p>{store.state.catalog.item.description}</p>
-                <p>Страна производитель: <b>{store.state.catalog.item.madeIn.title}</b></p>
-                <p> Категория: <b>{store.state.catalog.item.category.title}</b></p>
-                <p>Год выпуска: <b>{store.state.catalog.item.edition}</b></p>
-                <p className="price"><b> Цена: {numberFormat(store.state.catalog.item.price) } ₽</b></p>
-                <button onClick={callbacks.addToBasket}>Добавить</button>
-              </div>
+                          sum={select.sum}/>
+              <ProductItem item={store.state.catalog.item} addToBasket={callbacks.addToBasket}/>
             </div>
           </>
         ) : (

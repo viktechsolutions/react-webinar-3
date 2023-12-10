@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat, plural} from "../../utils";
 import './style.css';
-import {Link} from "react-router-dom";
+import Nav from "../nav";
 
 function BasketTool({sum, amount, onOpen}) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
       <div className={cn('left')}>
-        <Link to={'/'} className={cn('link')}>Главная</Link>
+        <Nav to={'/'} className={cn('link')}>Главная</Nav>
       </div>
       <div className={cn('right')}>
         <span className={cn('label')}>В корзине:</span>
