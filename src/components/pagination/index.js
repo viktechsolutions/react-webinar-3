@@ -38,11 +38,21 @@ function Pagination({ totalCount, currentPage, onChangePage }) {
       }
     }
 
-    if (currentPage === totalPages - 2 || currentPage === totalPages - 1 || currentPage === totalPages) {
+
+    if (currentPage === totalPages - 2 ) {
       pages.push(<span key="ellipsis2" className='ellipsis'>...</span>);
       for (let i = totalPages - 3; i <= totalPages; i++) {
         pages.push(
-          <button key={`page${i}`} className={currentPage === i ? 'btn active' : 'btn'} onClick={() => onChangePage(i)}>{i}</button>
+          <button key={`page${i}`} className={currentPage === i ? 'btn active' : 'btn'}
+                  onClick={() => onChangePage(i)}>{i}</button>
+        );
+      }
+    }  else if (currentPage === totalPages - 1 || currentPage === totalPages){
+      pages.push(<span key="ellipsis2" className='ellipsis'>...</span>);
+      for (let i = totalPages - 2; i <= totalPages; i++) {
+        pages.push(
+          <button key={`page${i}`} className={currentPage === i ? 'btn active' : 'btn'}
+                  onClick={() => onChangePage(i)}>{i}</button>
         );
       }
     } else if (currentPage < totalPages - 1 && totalPages > 4) {
