@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
@@ -8,6 +8,7 @@ import Head from "../../components/head";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
+import TopBar from "../../containers/top-bar";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -15,6 +16,16 @@ import LocaleSelect from "../../containers/locale-select";
 function Main() {
 
   const store = useStore();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      store.actions.auth.setToken(token);
+    } else {
+      store.actions.auth.removeToken();
+
+    }
+  }, [store]);
 
   useInit(() => {
     store.actions.catalog.initParams();
@@ -24,6 +35,7 @@ function Main() {
 
   return (
     <PageLayout>
+      <TopBar/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>

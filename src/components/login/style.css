@@ -1,0 +1,64 @@
+.register {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+h1{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 27.6px;
+}
+.form {
+  position: relative;
+
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error {
+  font-size: .75rem;
+
+  position: relative;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  padding: 0 0 .25rem .25rem;
+
+  color: #494949;
+}
+
+
+.button.submit:disabled {
+  opacity: .8;
+}
+
+.button.submit:hover {
+  scale: 103%;
+}
+
+.input-wrapper {
+  position: relative;
+
+  width: 100%;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 88%;
+
+  outline: 0;
+  height: 26px;
+}
+
+label{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
+.input-container {
+position: relative;
+
+height: 4em;
+}

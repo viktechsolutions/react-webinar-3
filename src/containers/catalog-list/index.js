@@ -12,7 +12,6 @@ import Spinner from "../../components/spinner";
  */
 function CatalogList() {
   const store = useStore();
-
   const select = useSelector(state => ({
     list: state.catalog.list,
     page: state.catalog.params.page,

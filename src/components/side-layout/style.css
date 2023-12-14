@@ -28,6 +28,10 @@
   padding: 20px;
 }
 
+.SideLayout_padding_topBar {
+  padding: 10px 20px;
+}
+
 .SideLayout-item {
   margin: 0 5px;
 }
