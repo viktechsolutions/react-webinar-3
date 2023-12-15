@@ -8,7 +8,9 @@ class AuthState extends StoreModule {
       isLoggedIn: false,
       token: '',
       loginError: null,
-      waiting: false
+      waiting: false,
+      name: '',
+      phone: '',
     };
   }
 
@@ -28,15 +30,21 @@ class AuthState extends StoreModule {
       });
 
       if (!response.ok) {
-         new Error('Login failed');
+       throw  new Error('Login failed');
       }
 
       const responseJson = await response.json();
+      console.log(responseJson)
       this.setState({
+        ...this.getState(),
+        name: responseJson.result.user.profile.name,
+        phone: responseJson.result.user.profile.phone,
+        email: responseJson.result.user.email,
         isLoggedIn: true,
         token: responseJson.token,
         waiting: false
       });
+
       localStorage.setItem('token', responseJson.result.token);
     } catch (error) {
       this.setState({
@@ -44,14 +52,16 @@ class AuthState extends StoreModule {
         waiting: false
       });
     }
-
   }
 
-
+  updateLoginStatus(isLoggedIn) {
+    this.setState({ isLoggedIn });
+  }
 
   setToken(token) {
     this.setState({ token });
   }
+
   async logout() {
     this.setState({ waiting: true }, 'Выход пользователя');
 
@@ -59,16 +69,15 @@ class AuthState extends StoreModule {
       const response = await fetch('/api/v1/users/sign', {
         method: 'DELETE',
         headers: {
-          'X-Token': this.getState().token,
+          'X-Token': localStorage.getItem('token'),
           'Content-Type': 'application/json'
         }
       });
-
+      localStorage.removeItem('token');
       if (!response.ok) {
        new Error('Logout failed');
       }
 
-      // Обработка успешного ответа (например, очистка состояния)
       this.setState({
         isLoggedIn: false,
         token: '',

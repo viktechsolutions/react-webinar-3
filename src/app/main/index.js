@@ -8,7 +8,7 @@ import Head from "../../components/head";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
-import TopBar from "../../containers/top-bar";
+import TopBar from "../../components/top-bar";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -20,10 +20,11 @@ function Main() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+      store.actions.auth.updateLoginStatus(true);
       store.actions.auth.setToken(token);
     } else {
+      store.actions.auth.updateLoginStatus(false);
       store.actions.auth.removeToken();
-
     }
   }, [store]);
 

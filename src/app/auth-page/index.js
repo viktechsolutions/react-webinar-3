@@ -1,7 +1,7 @@
 import {memo} from "react";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
-import TopBar from "../../containers/top-bar";
+import TopBar from "../../components/top-bar";
 import Login from "../../components/login";
 import LocaleSelect from "../../containers/locale-select";
 import PageLayout from "../../components/page-layout";
@@ -11,9 +11,6 @@ import SideLayout from "../../components/side-layout";
 
 
 function AuthPage () {
-
-  const store = useStore();
-
   const {t} = useTranslate();
 
   return (

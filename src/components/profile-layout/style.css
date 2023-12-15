@@ -1,0 +1,16 @@
+.ProfileLayout{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.ProfileLayout__info{
+  margin: 10px 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20.7px;
+}
+
+b{
+  font-weight: 700;
+}

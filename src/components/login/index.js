@@ -2,19 +2,32 @@ import './style.css';
 import {memo, useCallback, useEffect, useRef, useState} from "react";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
+import useSelector from "../../hooks/use-selector";
+import { useNavigate} from "react-router-dom";
 
-function Login () {
+function Login() {
 
   const store = useStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
-  const [emailError, setEmailError] = useState('Email cannot be empty');
-  const [passwordError, setPasswordError] = useState('Password cannot be empty');
+  const [emailError, setEmailError] = useState('Поле не может быть пустым');
+  const [passwordError, setPasswordError] = useState('Поле не может быть пустым');
   const [formValid, setFormValid] = useState(false);
   const [inputType, setInputType] = useState('password');
-   const emailInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const auth = useSelector(state => ({
+   errorResponse: state.auth.loginError,
+    isLoggedIn: state.auth.isLoggedIn,
+  }));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      navigate('/profile');
+    }
+  }, [auth.isLoggedIn]);
 
   const login = useCallback(() => {
     if (formValid) {
@@ -24,17 +37,17 @@ function Login () {
         console.error("Ошибка при входе:", error);
       }
     }
-  }, [email, password]); // Зависимости useCallback
+  }, [email, password]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    login(); // Вызов функции login в обработчике отправки формы
+    login();
   };
   const emailHandler = (e) => {
     setEmail(e.target.value);
 
     if (!e.target.value) {
-      setEmailError('Login cannot be empty');
+      setEmailError('Поле не может быть пустым');
     } else {
       setEmailError('');
     }
@@ -44,7 +57,7 @@ function Login () {
     setPassword(e.target.value);
 
     if (!e.target.value) {
-      setPasswordError('Password cannot be empty');
+      setPasswordError('Поле не может быть пустым');
     } else {
       setPasswordError('');
     }
@@ -73,19 +86,6 @@ function Login () {
     emailInputRef.current.focus();
   }, []);
 
-  const {t} = useTranslate();
-
-//   // В вашем компоненте, например, в Header или где-то еще
-//   const { auth } = useStore();
-//
-//   const handleLogout = async () => {
-//     await auth.logout();
-//   };
-//
-// // В разметке:
-//   <button onClick={handleLogout}>Выйти</button>
-//
-
   return (
     <div className="Login">
       <form
@@ -104,9 +104,6 @@ function Login () {
               name="login"
               type="text"
               className="input email "/>
-            {(emailDirty && emailError) && <div
-              className="error form__error"
-            >{emailError}</div>}
           </div>
         </div>
         <div className="input-container">
@@ -120,9 +117,7 @@ function Login () {
               type={inputType}
               className="input password"
             />
-            {(passwordDirty && passwordError) && <div
-              className="error form__error"
-            >{passwordError}</div>}
+            {auth.errorResponse && <div style={{color: 'red'}}  className="error form__error">Данные не корректны </div>}
           </div>
         </div>
         <button

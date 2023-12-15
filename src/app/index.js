@@ -4,7 +4,7 @@ import Main from "./main";
 import Basket from "./basket";
 import Article from "./article";
 import AuthPage from "./auth-page";
-import Profile from "../components/profile";
+import Profile from "./profile";
 
 /**
  * Приложение
