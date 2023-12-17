@@ -27,7 +27,6 @@ class ProfileState extends StoreModule {
       }
 
       const responseJson = await response.json();
-      console.log(responseJson)
       this.setState({
         ...this.getState(),
         username: responseJson.result.profile.name,

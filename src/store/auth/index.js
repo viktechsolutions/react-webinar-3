@@ -1,4 +1,5 @@
 import StoreModule from "../module";
+import {authService} from "../services/auth-service";
 
 class AuthState extends StoreModule {
   initState() {
@@ -30,22 +31,28 @@ class AuthState extends StoreModule {
       });
 
       if (!response.ok) {
-       throw  new Error('Login failed');
+        const responseJson = await response.json();
+        const errorMessage = responseJson.error.data.issues[0].message;
+        this.setState({
+          loginError: errorMessage,
+          waiting: false
+        });
+
+        return;
       }
 
       const responseJson = await response.json();
-      console.log(responseJson)
+      console.log("responseJson", responseJson);
       this.setState({
         ...this.getState(),
         name: responseJson.result.user.profile.name,
         phone: responseJson.result.user.profile.phone,
         email: responseJson.result.user.email,
         isLoggedIn: true,
-        token: responseJson.token,
+        token: responseJson.result.token,
         waiting: false
       });
-
-      localStorage.setItem('token', responseJson.result.token);
+      authService.setToken(responseJson.result.token);
     } catch (error) {
       this.setState({
         loginError: error.message,
@@ -69,11 +76,11 @@ class AuthState extends StoreModule {
       const response = await fetch('/api/v1/users/sign', {
         method: 'DELETE',
         headers: {
-          'X-Token': localStorage.getItem('token'),
+          'X-Token': authService.getToken('token'),
           'Content-Type': 'application/json'
         }
       });
-      localStorage.removeItem('token');
+
       if (!response.ok) {
        new Error('Logout failed');
       }
@@ -90,9 +97,6 @@ class AuthState extends StoreModule {
         waiting: false
       }, 'Ошибка при выходе из системы');
     }
-  }
-  removeToken() {
-    this.setState({ isLoggedIn: false, token: ''  });
   }
 }
 

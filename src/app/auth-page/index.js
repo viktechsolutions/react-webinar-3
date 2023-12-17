@@ -8,6 +8,8 @@ import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
 import SideLayout from "../../components/side-layout";
+import UserBar from "../../containers/user-bar";
+import LoginBox from "../../containers/login-box";
 
 
 function AuthPage () {
@@ -15,13 +17,13 @@ function AuthPage () {
 
   return (
     <PageLayout>
-      <TopBar/>
+      <UserBar/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
       <SideLayout padding="medium">
-        <Login/>
+        <LoginBox/>
       </SideLayout>
     </PageLayout>
   );

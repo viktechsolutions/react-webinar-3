@@ -15,7 +15,8 @@ class Store {
      * article: ArticleState,
      * locale: LocaleState,
      * auth: AuthState,
-     * profile-layout: ProfileState
+     * profile-layout: ProfileState,
+     * category: CategoryState
      * }} */
     this.actions = {};
     for (const name of Object.keys(modules)) {
@@ -46,7 +47,8 @@ class Store {
    * article: Object,
    * locale: Object,
    * auth: Object,
-   * profile-layout: Object
+   * profile-layout: Object,
+   * category: Object
    * }}
    */
   getState() {
@@ -60,8 +62,8 @@ class Store {
   setState(newState, description = 'setState') {
     console.group(
       `%c${'store.setState'} %c${description}`,
-      `color: ${'#777'}; font-weight: normal`,
-      `color: ${'#333'}; font-weight: bold`,
+      `color: ${'#428fe8'}; font-weight: normal`,
+      `color: ${'#28ea1b'}; font-weight: bold`,
     );
     console.log(`%c${'prev:'}`, `color: ${'#d77332'}`, this.state);
     console.log(`%c${'next:'}`, `color: ${'#2fa827'}`, newState);

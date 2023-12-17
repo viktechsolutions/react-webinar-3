@@ -6,6 +6,7 @@ import ProfileLayout from "../../components/profile-layout";
 import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import useTranslate from "../../hooks/use-translate";
+import UserBar from "../../containers/user-bar";
 
 /**
  * Страница товара с первичной загрузкой товара по id из url адреса
@@ -15,7 +16,7 @@ function Profile() {
 const {t} = useTranslate();
   return (
     <PageLayout>
-      <TopBar  />
+     <UserBar/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>

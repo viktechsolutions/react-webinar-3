@@ -1,37 +1,23 @@
-import {memo, useEffect} from "react";
+import {memo, useEffect, useState} from "react";
 import useStore from "../../hooks/use-store";
 import {Link} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import './style.css';
 
-/**
- * Контейнер с компонентами навигации
- */
-function TopBar() {
-  const store = useStore();
-  const isLoggedIn = localStorage.getItem('token');
-
-  useEffect(() => {
-    store.actions.profile.profile();
-  }, []);
-
-  const select = useSelector(state => ({
-    name: state.profile.username
-  }));
-
+function TopBar(props) {
   return (
     <div className="Topbar">
-      {!isLoggedIn && (
+      {!props.isLoggedIn && (
         <Link to={'/login'}>
           <button> Вход</button>
         </Link>
       )}
-      {isLoggedIn && (
+      {props.isLoggedIn && (
         <>
           <Link to="/profile" className="Topbar__name">{
-            select.name
+            props.name
           }</Link>
-          <button onClick={() => store.actions.auth.logout()}>Выход</button>
+            <button onClick={props.logout}>Выход</button>
         </>
       )}
     </div>

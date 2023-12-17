@@ -13,10 +13,10 @@ function CatalogFilter() {
 
   const store = useStore();
 
-  const categories = useSelector(state => state.catalog.categories);
+  const categories = useSelector(state => state.category.categories);
 
   useEffect(() => {
-    store.actions.catalog.fetchCategories();
+    store.actions.category.fetchCategories();
   }, []);
 
   const select = useSelector(state => ({
