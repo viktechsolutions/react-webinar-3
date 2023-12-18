@@ -13,14 +13,14 @@ import {useEffect, useState} from "react";
  * Маршрутизация по страницам и модалкам
  */
 function App() {
-  const [isToken, setIsToken] = useState(false)
+  // const [isToken, setIsToken] = useState(false)
   const isAuth= useAuth();
 
-  useEffect(() => {
-    if (isAuth) {
-      setIsToken(true);
-    }
-  }, [isAuth]);
+  const auth = useSelector(state => ({
+    isAuthenticated: state.auth.isLoggedIn,
+  }));
+
+  const isToken = isAuth && auth.isAuthenticated;
 
   const activeModal = useSelector(state => state.modals.name);
 

@@ -6,14 +6,10 @@ const useAuth = () => {
   const store = useStore();
 
   useEffect(() => {
-    const token = store.state.auth.token;
-
-    if(token) {
-      setIsAuthenticated(true);
-      store.actions.auth.updateLoginStatus(isAuthenticated);
-    }
-
-  }, [store.state.auth.isLoggedIn]);
+    store.actions.auth.token().then(isValidToken => {
+      setIsAuthenticated(isValidToken);
+    });
+  }, [store.state.auth.token]);
   return isAuthenticated;
 }
 

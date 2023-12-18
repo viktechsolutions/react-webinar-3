@@ -68,10 +68,6 @@ class AuthState extends StoreModule {
 
   }
 
-  setToken(token) {
-    this.setState({token});
-  }
-
   async logout() {
     this.setState({waiting: true}, 'Выход пользователя');
 
@@ -79,7 +75,7 @@ class AuthState extends StoreModule {
       const response = await fetch('/api/v1/users/sign', {
         method: 'DELETE',
         headers: {
-          'X-Token': authService.getToken('token'),
+          'X-Token': authService.getToken(),
           'Content-Type': 'application/json'
         }
       });
@@ -109,16 +105,47 @@ class AuthState extends StoreModule {
     }
   }
 
-  token() {
+  async token() {
     let isToken = false;
     const token = authService.getToken();
-    const tokenStore = this.getState().token;
+    // const tokenStore = this.getState().token;
 
-    if (token === tokenStore) {
-      isToken = true;
-    } else {
-      isToken = false;
-      authService.removeToken();
+    if(token) {
+      try {
+        const response = await fetch('/api/v1/users/self?fields=*', {
+          method: 'GET',
+          headers: {
+            'X-Token': token,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          const responseJson = await response.json();
+          const errorMessage = responseJson.error.data.issues[0].message;
+          this.setState({
+            loginError: errorMessage
+          });
+        }
+
+        const responseJson = await response.json();
+        console.log(responseJson);
+        const tokenStore = authService.getToken();
+        isToken = true;
+        this.setState({
+          ...this.getState(),
+          name: responseJson.result.profile.name,
+          phone: responseJson.result.profile.phone,
+          email: responseJson.result.email,
+          isLoggedIn: true,
+          token: responseJson.result.token,
+          waiting: false
+        });
+      } catch (error) {
+        console.error(error)
+        isToken = false
+        authService.removeToken();
+      }
     }
 
     return isToken

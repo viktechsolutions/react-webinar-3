@@ -16,7 +16,7 @@ function UserBar() {
     }
   }, [store]);
 
-  const select = useSelector(state => ({ name: state.profile.username }));
+  const select = useSelector(state => ({ name: state.auth.name }));
 
   const logout = useCallback(() => {
     store.actions.auth.logout();
