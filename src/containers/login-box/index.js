@@ -16,24 +16,17 @@ function LoginBox() {
   const [password, setPassword] = useState('');
   const [formValid, setFormValid] = useState(false);
 
-  useEffect(() => {
-    if (auth.isLoggedIn) {
-      console.log(auth.isLoggedIn);
-      navigate('/profile');
-    }
-  }, [auth.isLoggedIn, navigate]);
-
-  const login = useCallback(() => {
+  const login = useCallback(async () => {
     if (formValid) {
       try {
-        store.actions.auth.login(email, password);
+        await store.actions.auth.login(email, password);
         store.actions.auth.updateLoginStatus(true);
-        store.actions.auth.setToken(store.getState().auth.token);
+        navigate('/profile');
       } catch (error) {
-        console.error("Ошибка при входе:", error);
+        console.error("Error login:", error);
       }
     }
-  }, [email, password, formValid, store.actions.auth]);
+  }, [email, password, formValid, store, navigate]);
 
   const onEmailChange = (value) => {
     setEmail(value);

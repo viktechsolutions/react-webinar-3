@@ -16,7 +16,7 @@ class AuthState extends StoreModule {
   }
 
   async login(email, password, remember = true) {
-    this.setState({ waiting: true });
+    this.setState({waiting: true});
     try {
       const response = await fetch('/api/v1/users/sign', {
         method: 'POST',
@@ -42,7 +42,6 @@ class AuthState extends StoreModule {
       }
 
       const responseJson = await response.json();
-      console.log("responseJson", responseJson);
       this.setState({
         ...this.getState(),
         name: responseJson.result.user.profile.name,
@@ -62,15 +61,19 @@ class AuthState extends StoreModule {
   }
 
   updateLoginStatus(isLoggedIn) {
-    this.setState({ isLoggedIn });
+    this.setState({
+      isLoggedIn: isLoggedIn,
+      token: authService.getToken('token'),
+    });
+
   }
 
   setToken(token) {
-    this.setState({ token });
+    this.setState({token});
   }
 
   async logout() {
-    this.setState({ waiting: true }, 'Выход пользователя');
+    this.setState({waiting: true}, 'Выход пользователя');
 
     try {
       const response = await fetch('/api/v1/users/sign', {
@@ -82,7 +85,14 @@ class AuthState extends StoreModule {
       });
 
       if (!response.ok) {
-       new Error('Logout failed');
+        const responseJson = await response.json();
+        const errorMessage = responseJson.error.data.issues[0].message;
+        this.setState({
+          loginError: errorMessage,
+          waiting: false
+        });
+        console.log(errorMessage)
+        return;
       }
 
       this.setState({
@@ -90,13 +100,28 @@ class AuthState extends StoreModule {
         token: '',
         waiting: false
       }, 'Пользователь вышел из системы');
-
+      authService.removeToken();
     } catch (error) {
       this.setState({
         loginError: error.message,
         waiting: false
       }, 'Ошибка при выходе из системы');
     }
+  }
+
+  token() {
+    let isToken = false;
+    const token = authService.getToken();
+    const tokenStore = this.getState().token;
+
+    if (token === tokenStore) {
+      isToken = true;
+    } else {
+      isToken = false;
+      authService.removeToken();
+    }
+
+    return isToken
   }
 }
 

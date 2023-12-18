@@ -3,29 +3,29 @@ import useStore from "../../hooks/use-store";
 import {useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import './style.css';
+import {authService} from "../../store/services/auth-service";
+
 
 function ProfileLayout() {
   const store = useStore();
 
-  const token = localStorage.getItem('token');
+  const token = authService.getToken()
   const navigate = useNavigate();
+const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
   useEffect(() => {
-    store.actions.profile.profile();
-  }, []);
+    if (!isLoggedIn) {
+      if (window.location.pathname !== '/login') {
+        navigate('/login');
+      }
+    }
+  }, [isLoggedIn, navigate]);
 
   const select = useSelector(state => ({
     name: state.profile.username,
     phone: state.profile.phone,
     email: state.profile.email
   }));
-
-  useEffect(() => {
-    if (token) {
-      navigate('/profile');
-    } else {
-      navigate('/login');
-    }
-  }, [token]);
 
   return (
       <div className="ProfileLayout">
