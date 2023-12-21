@@ -1,6 +1,7 @@
 // Начальное состояние
 export const initialState = {
   data: {},
+  comments: {},
   waiting: false // признак ожидания загрузки
 }
 
@@ -11,7 +12,7 @@ function reducer(state = initialState, action) {
       return {...state, data: {}, waiting: true};
 
     case "article/load-success":
-      return {...state, data: action.payload.data, waiting: false};
+      return {...state, data: action.payload.data, comments: action.payload.comments, waiting: false};
 
     case "article/load-error":
       return {...state, data: {}, waiting: false}; //@todo текст ошибки сохранять?

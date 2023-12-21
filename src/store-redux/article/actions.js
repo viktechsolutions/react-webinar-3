@@ -14,7 +14,8 @@ export default {
           url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`
         });
         // Товар загружен успешно
-        dispatch({type: 'article/load-success', payload: {data: res.data.result}});
+        dispatch({type: 'article/load-success', payload: {data: res.data.result},
+          comments: res.data.result.items,});
 
       } catch (e) {
         //Ошибка загрузки
