@@ -9,6 +9,7 @@ function CommentForm({text, onTextChange, onSubmit, onCancel}) {
         rows="5"
         cols="100"
         value={text}
+        resize="none"
         onChange={onTextChange}
       ></textarea>
       <div className="Comment-form-buttons">

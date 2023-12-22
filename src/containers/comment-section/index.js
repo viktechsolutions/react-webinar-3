@@ -1,7 +1,7 @@
 import Comment from "../../components/comment";
 import useSelector from '../../hooks/use-selector';
 import CommentForm from "../../components/comment-form";
-import {useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import useInit from "../../hooks/use-init";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import commentsActions from "../../store-redux/comments/actions";
@@ -18,6 +18,7 @@ function CommentSection(props) {
   const [formData, setFormData] = useState({text: ''});
   const [isReplying, setIsReplying] = useState(false);
   const [parentCommentId, setParentCommentId] = useState(null);
+  const navigate = useNavigate();
 
   useInit(() => {
     dispatch(commentsActions.load(params.id));
@@ -156,20 +157,25 @@ function CommentSection(props) {
           </div>
         </SideLayout>
       ))}
-      <SideLayout padding='large'>
+      {select.exists && <SideLayout padding='largecol'>
         <div style={{marginBottom: '10px', fontSize: '12px', fontWeight: 700}}>Новый комментарий</div>
-
         <CommentForm
           text={formData.text}
           onTextChange={handleTextChange}
           onSubmit={callback.onSubmitComment}
           onCancel={callback.closeReplyForm}
         />
-      </SideLayout>
+      </SideLayout>}
+      {!select.exists && (
+        <SideLayout padding='large'>
+          <p>
+            <Link to={'/login'} state={{back: location.pathname}} style={{ color: '#0087E9' }}>
+              Войдите
+            </Link>, чтобы иметь возможность комментировать
+          </p>
+        </SideLayout>
+      )}
 
-
-      {!select.exists &&
-        <SideLayout padding='large'><p>Войдите, чтобы иметь возможность комментировать</p></SideLayout>}
     </div>
   );
 }

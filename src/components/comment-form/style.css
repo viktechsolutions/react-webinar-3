@@ -12,7 +12,7 @@
   border-radius: 1px;
   padding: 10px;
   font-size: 16px;
-  resize: vertical;
+  resize: none;
   margin-bottom: 10px;
 }
 
