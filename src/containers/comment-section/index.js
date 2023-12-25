@@ -6,12 +6,12 @@ import useInit from "../../hooks/use-init";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import commentsActions from "../../store-redux/comments/actions";
 import shallowequal from "shallowequal";
-import {memo, useCallback, useState} from "react";
+import {memo,  useEffect, useState} from "react";
 import treeToList from "../../utils/tree-to-list";
 import SideLayout from "../../components/side-layout";
 import commentActions from "../../store-redux/comments/actions";
 
-function CommentSection(props) {
+function CommentSection() {
   const params = useParams();
   const dispatch = useDispatch();
   const [replyCommentId, setReplyCommentId] = useState(null);
@@ -19,6 +19,7 @@ function CommentSection(props) {
   const [isReplying, setIsReplying] = useState(false);
   const [parentCommentId, setParentCommentId] = useState(null);
   const navigate = useNavigate();
+  const [name, setName]=useState('');
 
   useInit(() => {
     dispatch(commentsActions.load(params.id));
@@ -28,8 +29,14 @@ function CommentSection(props) {
   const select = useSelector(state => ({
     exists: state.session.exists,
     username: state.session.user.profile?.name,
-    id: state.session.user._id
+    id: state.session.user._id,
   }));
+
+  useEffect(() => {
+    if(select.username){
+      setName(select.username)
+    }
+  }, []);
 
   const selectRedux = useSelectorRedux(state => ({
     comment: state.comments.data,
@@ -130,7 +137,9 @@ function CommentSection(props) {
       {flatCommentList?.map(commentItem => (
         <SideLayout key={commentItem._id} padding='large'>
           <div style={{marginLeft: `${commentItem.level * 10}px`}}>
-            <Comment comment={commentItem}/>
+            <Comment comment={commentItem}
+                     isLoggedInUser={select.username}
+            />
             {select.exists && (
               <div>
                 <SideLayout padding='top'>
